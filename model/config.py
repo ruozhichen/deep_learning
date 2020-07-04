@@ -26,10 +26,11 @@ feature_dict = {
     'creative_id': {
         'type': ColumnType.CATEGORY,
         'transform': ColumnTransform.HASH_BUCKET,
-        'parameter': 1000000,
+        'parameter': 100000,
         'dtype': tf.int64,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 100000
     },
     'click_times': {
         'type': ColumnType.CONTINUOUS,
@@ -37,23 +38,26 @@ feature_dict = {
         'parameter': None,
         'dtype': tf.int16,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 1
     },
     'ad_id': {
         'type': ColumnType.CATEGORY,
         'transform': ColumnTransform.HASH_BUCKET,
-        'parameter': 1000000,
+        'parameter': 100000,
         'dtype': tf.int64,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 100000
     },
     'product_id': {
         'type': ColumnType.CATEGORY,
         'transform': ColumnTransform.HASH_BUCKET,
-        'parameter': 10000,
+        'parameter': 1000,
         'dtype': tf.int32,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 1000
     },
     'product_category': {
         'type': ColumnType.CATEGORY,
@@ -61,15 +65,17 @@ feature_dict = {
         'parameter': [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
         'dtype': tf.int16,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 18
     },
     'advertiser_id': {
         'type': ColumnType.CATEGORY,
         'transform': ColumnTransform.HASH_BUCKET,
-        'parameter': 10000,
+        'parameter': 1000,
         'dtype': tf.int32,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 1000
     },
     'industry': {
         'type': ColumnType.CATEGORY,
@@ -77,15 +83,17 @@ feature_dict = {
         'parameter': 300,
         'dtype': tf.int32,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 300
     },
     'weekday': {
         'type': ColumnType.CATEGORY,
         'transform': ColumnTransform.VOCAB,
-        'parameter': [0, 1, 2, 3, 4, 5, 6, 7],
+        'parameter': [0, 1, 2, 3, 4, 5, 6],
         'dtype': tf.int16,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 7
     },
     'user_product_id_click': {
         'type': ColumnType.CONTINUOUS,
@@ -93,7 +101,8 @@ feature_dict = {
         'parameter': None,
         'dtype': tf.int16,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 1
     },
     'user_product_category_click': {
         'type': ColumnType.CONTINUOUS,
@@ -101,7 +110,8 @@ feature_dict = {
         'parameter': None,
         'dtype': tf.int16,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 1
     },
     'user_industry_click': {
         'type': ColumnType.CONTINUOUS,
@@ -109,7 +119,8 @@ feature_dict = {
         'parameter': None,
         'dtype': tf.int16,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 1
     },
     'user_weekday_click': {
         'type': ColumnType.CONTINUOUS,
@@ -117,7 +128,8 @@ feature_dict = {
         'parameter': None,
         'dtype': tf.int16,
         'is_deep': True,
-        'is_wide': True
+        'is_wide': True,
+        'hashlength': 1
     }
 }
 # time,user_id,creative_id,click_times,ad_id,product_id,product_category,advertiser_id,industry,age,gender,

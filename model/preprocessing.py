@@ -102,7 +102,12 @@ class Preprocessing(object):
         data_path = self._path + "\\data_user.csv"
         df = pd.read_csv(data_path)
         df = df.sample(frac=frac).reset_index(drop=True)  # train数据打乱顺序
-        df.to_csv(self._path + "\\train_sample.csv", index=False)
+        num = int(len(df) * 0.9)
+        train_df = df[:num]
+        test_df = df[num:]
+        df.to_csv(self._path + "\\data_sample.csv", index=False)
+        train_df.to_csv(self._path + "\\train_sample.csv", index=False)
+        test_df.to_csv(self._path + "\\test_sample.csv", index=False)
 
     def run(self):
         self._load_data()
@@ -159,8 +164,8 @@ class Preprocessing(object):
 
 
 if __name__ == '__main__':
-    data_path = "f:\deep\Tencent\data"
+    data_path = "f:\deep\deep_learning\data"
     preprocessing = Preprocessing(data_path, "train")
     # preprocessing.join_user_feature()
     # preprocessing.test()
-    preprocessing.sample_train_data()
+    preprocessing.sample_test_data()
