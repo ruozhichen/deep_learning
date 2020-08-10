@@ -9,20 +9,14 @@ class ColumnType(Enum):
 class ColumnTransform(Enum):
     HASH_BUCKET = 1
     VOCAB = 2
-    IDENTITY = 3
-    MIN_MAX = 4
-    STANDARD = 5
-    LOG = 6
+    LOG = 3
 
 USER_FEATURE_COLS = ['product_id', 'product_category', 'industry', 'weekday']
 CLICK_COLS = ["time", "user_id", "creative_id", "click_times"]
 AD_COLS = ["creative_id", "ad_id", "product_id", "product_category", "advertiser_id", "industry"]
 USER_COLS = ["user_id", "age", "gender"]
 
-# FEATURE_COLS = ["creative_id", "click_times", "ad_id", "product_id", "product_category", "advertiser_id", "industry"]
-
 feature_dict = {
-    # ad feature
     'creative_id': {
         'type': ColumnType.CATEGORY,
         'transform': ColumnTransform.HASH_BUCKET,
@@ -132,6 +126,4 @@ feature_dict = {
         'hashlength': 1
     }
 }
-# time,user_id,creative_id,click_times,ad_id,product_id,product_category,advertiser_id,industry,age,gender,
-# weekday,user_product_id_click,user_product_category_click,user_industry_click,user_weekday_click
 FEATURE_COLS = feature_dict.keys()

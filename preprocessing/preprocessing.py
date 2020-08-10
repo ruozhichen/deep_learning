@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
-
+"""
+author: Sunny.Xia
+date: 2020-08-09
+"""
+import sys
 import pandas as pd
+sys.path.append("../model")
 import config
 from collections import Counter,defaultdict
+from optparse import OptionParser
 
 class Preprocessing(object):
     def __init__(self, home, type):
@@ -20,7 +26,7 @@ class Preprocessing(object):
 
     def _load_click(self, path):
         # time: 1-91 creative_id: 2481135
-        log_path = path +'\click_log.csv'
+        log_path = path +'\\click_log.csv'
         logDF = pd.read_csv(log_path)
         print(logDF.dtypes)
         for col in config.CLICK_COLS:
@@ -115,57 +121,17 @@ class Preprocessing(object):
         self.join_user_feature()
         self.sample_train_data()
 
-    def preprocess_res(self):
-        data=[]
-        for i in range(10):
-            path = "d:\\Tencent\\code\\data\\res_age\\age_res_%d.txt" % i
-            with open(path, 'r') as fin:
-                # [b'0']
-                for line in fin:
-                    label = line.replace('[','').replace(']', '').replace('b', '').replace('\'', '')
-                    data.append(label)
-        with open("d:\\Tencent\\code\\data\\res_age\\age_res.txt", 'w') as fout:
-            fout.writelines(data)
-
-    def find_max(self, array):
-        return Counter(array).most_common(1)[0][0]
-
-    def preprocess_output(self):
-        df=pd.read_csv("d:\\Tencent\\code\\data\\test\\data.csv")
-        df = df[['user_id']]
-        age_df = pd.read_csv("d:\\Tencent\\code\\data\\res_age\\age_res_gbdt.txt", header=None, names=['age'])
-        gender_df = pd.read_csv("d:\\Tencent\\code\\data\\res_gender\\gender_res.txt", header=None, names=['gender'])
-        df['age'] = age_df['age']+1
-        df['gender'] = gender_df['gender']+1
-        print(df.columns)
-
-        d = defaultdict(list)
-        s = df.set_index(['user_id']).stack()
-        # print(s[0:10,:])
-        [d[k].append(v) for k, v in s.iteritems()]
-
-        res = pd.Series(d).unstack().rename_axis(['user_id']).reset_index()
-        print(res.columns)
-        res['predicted_age'] = res['age'].map(self.find_max)
-        res['predicted_gender'] = res['gender'].map(self.find_max)
-        res.to_csv("d:\\Tencent\\code\\data\\submission.csv",columns=['user_id', 'predicted_age', 'predicted_gender'], index=False, header=True)
-
-
-    def test(self):
-        # self._load_click()
-        print("df1")
-        df1 = self._load_ad("d:\Tencent\code\data\\train")
-        print("df2")
-        df2 = self._load_ad("d:\Tencent\code\data\\test")
-        data = pd.concat([df1, df2], axis=0)
-        print(len(df1),len(df2),len(data))
-        for col in config.AD_COLS:
-            print("col: %s %d\n" % (col, len(data[col].unique())))
-
-
 if __name__ == '__main__':
-    data_path = "f:\deep\deep_learning\data"
-    preprocessing = Preprocessing(data_path, "train")
-    # preprocessing.join_user_feature()
-    # preprocessing.test()
-    preprocessing.sample_test_data()
+    parser = OptionParser()
+    parser.add_option("-p", "--path", dest="data_path",
+                      default="D:\deep_learning\deep_learning\data",
+                      help="read data from path")
+    parser.add_option("-t", "--type", dest="type",
+                      default="train",
+                      help="train | test")
+    options, args = parser.parse_args()
+    print(options)
+    print(args)
+    preprocessing = Preprocessing(args.data_path, args.type)
+    preprocessing.run()
+

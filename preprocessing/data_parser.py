@@ -38,8 +38,9 @@ class FeatureDictionary(object):
                 hashlength = feature['hashlength']
                 self.col2feat_id[col] = dict(zip(range(hashlength), range(total_dim, hashlength + total_dim)))
                 total_dim += hashlength
-            print(col, total_dim)
-        self.feat_dim = total_dim
+            # print(col, total_dim)
+        self.feature_size = total_dim
+        self.field_size = len(config.feature_dict.keys())
 
 
 class DataParser(object):
@@ -79,7 +80,7 @@ if __name__ == '__main__':
     feat_dict = FeatureDictionary()
     print(feat_dict.col2feat_id.keys())
     dataparser = DataParser(feat_dict, "gender")
-    ids, vals, label = dataparser.parse(infile="F:\\deep\deep_learning\\data\\train\\test_sample.csv")
+    ids, vals, label = dataparser.parse(infile="..\\data\\train\\test_sample.csv")
     print(ids[0])
     print(vals[0])
     print(label[0])
