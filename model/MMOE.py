@@ -98,7 +98,7 @@ def model_fn(features, labels, mode, params):
                                    initializer=tf.contrib.layers.xavier_initializer())
 
     # gates
-    # tasks_num * experts_units * experts_num
+    # tasks_num * feature_dim * experts_num
     gate_weights = [tf.get_variable(name='gate%d_weight' % i,
                                    dtype=tf.float32,
                                    shape=(input_layer.get_shape()[1], experts_num),
